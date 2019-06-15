@@ -9,6 +9,13 @@ public abstract class Estado {
     }
 
     public abstract void ingresarDinero(double dinero);
-    public abstract void venderGaseosa(double dineroIngresado, double precio);
+
+    //public abstract void venderGaseosa(double dineroIngresado, double precio); // puede ser que este este mal
+
+    public abstract void accionarPalanca(double dineroIngresado, double precio); // este cierra mas (ver hoja para lo que hay que implementar)
+
+    public abstract void finTransaccion();
+
+
 
 }

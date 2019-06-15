@@ -14,18 +14,38 @@ public class Maquina {
         this.stock = stock;
         this.gaseosa = gaseosa1;
         this.precio = gaseosa1.getPrecio();
-        estadoMaquina = new ConStock(this); // me costo mucho darme cuenta esta pequena parte
+        estadoMaquina = new EstLista(this); // me costo mucho darme cuenta esta pequena parte
     }
 
 
     public void ingresarPlata(double dinero) {
+
         estadoMaquina.ingresarDinero(dinero);
     }
 
+    /*
     public void venderGaseosa() {
         estadoMaquina.venderGaseosa(dineroEnMaquina, precio);
     }
+    */
 
+
+    public void stokearMaquina(int unidadGaseosa) {
+
+        stock += unidadGaseosa;
+        setEstado(new EstLista(this));
+    }
+
+    public void accionarPalanca() {
+        estadoMaquina.accionarPalanca(dineroEnMaquina, precio);
+    }
+
+    public void finTransaccion() {
+        estadoMaquina.finTransaccion();
+    }
+
+    /* este tampoco va aca
+     pertenece a la accion de la alanca
     // que hacer si el dinero es insuficiente o no deposito dinero
     public void faltaDinero() {
         if(dineroEnMaquina == 0) {
@@ -35,52 +55,69 @@ public class Maquina {
                 System.out.println("Dinero Insuficiente, resta abonar $" + (precio - dineroEnMaquina));
         }
     }
+     */
+
 
     // seterar los estados de la maquina
     public void setEstado(Estado estado) {
         this.estadoMaquina = estado;
     }
 
+    /* no va porque manejo de otra forma lo del stock
     // sin stock de gaseosa
     public void verStock() {
         if(stock < 1) {
-            setEstado(new SinStock(this));
+            setEstado(new EstSinStock(this));
         }
     }
+     */
+    // getter de lo que voy a usar o necesitar
 
-    // trabajo con el dinero ingresado a la maquina y lo descuento por venta, muestro lo que entregue, devuelvo si no realizo accion
+    public double getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(double precio) {
+        this.precio = precio;
+    }
+
     public double getDineroEnMaquina() {
         return dineroEnMaquina;
     }
 
-    public void descontarVenta(double dinero) {
-        this.dineroEnMaquina -= dinero;
+    public void setDineroEnMaquina(double dineroEnMaquina) {
+        this.dineroEnMaquina = dineroEnMaquina;
+    }
+
+    public int getStock() {
+        return stock;
+    }
+
+
+    // esta logica la usarn los estados
+
+    public void descontarDineroDepositado() {
+        this.dineroEnMaquina -= precio;
     }
 
     public void depositarDinero(double dinero) {
         this.dineroEnMaquina += dinero;
     }
 
-
-    public void devolverDirenero() {
-        dineroEnMaquina = 0;
+    /*
+    public void setDineroEnMaquina(double dineroEnMaquina) {
+        this.dineroEnMaquina = dineroEnMaquina;
     }
+    */
 
-    // trabajo con el stock de gaseosas
-    public int getStock() {
-        return stock;
+    void devolverDirenero() {
+        this.setDineroEnMaquina(0.0);
     }
 
     public void restarStock() {
         stock--;
     }
 
-    /*
-    Habia arrancado el ejercicio con una interface, luego me bloquier y decidi cambiar a una clase abstracta y
-    tratar de enganchar los distintos puntos necesarios para armar la simulacion.
-    Me quedo afuera el tema de la palanca que no supe nunca donde colocarla, como estoy medio peleado con la sintaxis
-    se me ocurre que palanca deberia ser un comportamiento dentro de maquina pero ya estoy bloqueado y no se como seguir.
-     */
 
 
 }
